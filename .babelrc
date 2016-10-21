@@ -1,0 +1,7 @@
+{
+    "presets": ["es2015", "stage-0", "stage-1"],
+    "plugins": ["transform-class-properties", "transform-es2015-modules-commonjs"],
+    "compact": false,
+    "minified": false,
+    "comments": false
+}

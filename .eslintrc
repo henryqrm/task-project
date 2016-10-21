@@ -1,0 +1,51 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "plugin:node/recommended",
+        "eslint:recommended",
+        "airbnb"
+    ],
+    "env": {
+        "browser": false,
+        "es6": true,
+        "node": true
+    },
+    "ecmaFeatures": {
+        "arrowFunctions": true,
+        "blockBindings": true,
+        "classes": true,
+        "defaultParams": true,
+        "destructuring": true,
+        "forOf": true,
+        "generators": true,
+        "modules": true,
+        "spread": true,
+        "templateStrings": true
+    },
+    "installedESLint": true,
+    "plugins": [
+        "babel",
+        "import",
+        "node"
+    ],
+    "rules": {
+        // Babel
+        "babel/generator-star-spacing": 1,
+        "babel/new-cap": 1,
+        "babel/array-bracket-spacing": 1,
+        "babel/object-curly-spacing": 1,
+        "babel/object-shorthand": 1,
+        "babel/arrow-parens": 1,
+        "babel/no-await-in-loop": 1,
+        "babel/flow-object-type": 1,
+        "babel/func-params-comma-dangle": 1,
+        "indent": ["error", 4],
+        "no-underscore-dangle": 0
+    },
+    "globals": {
+        "log": true,
+        "angular": true,
+        "d3": true
+    },
+    "settings": {}
+}
