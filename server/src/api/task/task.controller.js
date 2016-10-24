@@ -71,39 +71,12 @@ export function create(req, res) {
         .catch(handleError(res));
 }
 
-// Updates an existing Task in the DB
-export function status(req, res) {
-    const data = {
-        status: req.params.status,
-    };
-    console.log(data);
-
-    return Task.findById(req.params.id)
-        .exec()
-        .then(handleEntityNotFound(res))
-        .then(saveUpdates(data))
-        .then(respondWithResult(res))
-        .catch(handleError(res));
-}
-
-// Updates an existing Task in the DB
-export function priority(req, res) {
-    const data = {
-        priority: req.params.priority,
-    };
-    return Task.findById(req.params.id)
-        .exec()
-        .then(handleEntityNotFound(res))
-        .then(saveUpdates(data))
-        .then(respondWithResult(res))
-        .catch(handleError(res));
-}
-
 export function update(req, res) {
     if (req.body._id) {
         delete req.body._id;
     }
-    return Task.findById(req.params.id).exec()
+    return Task.findById(req.params.id)
+        .exec()
         .then(handleEntityNotFound(res))
         .then(saveUpdates(req.body))
         .then(respondWithResult(res))
