@@ -8,8 +8,8 @@
 
   <ion-content>
     <ion-list>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+      <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
+        {{page.title}}
       </button>
     </ion-list>
   </ion-content>

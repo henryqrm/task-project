@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Cadastro de Projetos</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let project of projects">
+            <h2>{{project.name}}</h2>
+            <ion-note item-right>
+                <button ion-button icon-only clear color="danger" (click)="remove(project)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label stacked>Nome</ion-label>
+            <ion-input type="text" placeholder="Escreva o nome do projeto" #name></ion-input>
+            <ion-note item-right>
+                <button ion-button icon-only clear (click)="add(name)">
+                  <ion-icon name="send"></ion-icon>
+                </button>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+</ion-content>
