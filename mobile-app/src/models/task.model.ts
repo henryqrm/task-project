@@ -3,9 +3,8 @@ export class Task {
     name: string;
     description: string;
     // image: string;
-    // status: string;
+    status: boolean;
     // priority: number;
-    // color: string;
     // limitAt: Date;
     // createAt: Date;
 }

@@ -1,18 +1,53 @@
 <ion-header>
-  <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
+	<ion-navbar>
+		<button menuToggle *ngIf="!selectedItem">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Item Details</ion-title>
-  </ion-navbar>
+		<ion-title>Item Details</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content>
- <div *ngIf="selectedItem" class="selection">
-    <b>{{selectedItem.name}}</b>
-    <ion-icon name="{{selectedItem.description}}"></ion-icon>
-    <div>
-      ID: <b>{{selectedItem._id}}</b>
-    </div>
-  </div>
+	<form *ngIf="selectedItem" (ngSubmit)="onSubmit()" #taskForm="ngForm">
+		<ion-list>
+			<ion-item>
+				<ion-label stacked>Nome</ion-label>
+				<ion-input type="text" placeholder="Escreva o nome da tarefa" [(ngModel)]="task.name" required #name></ion-input>
+				<!--<div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+					Name é required
+				</div>-->
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Descrição</ion-label>
+				<ion-textarea placeholder="Escreva a descrição da tarefa" [(ngModel)]="task.description" required #description></ion-textarea>
+				<!--<div [hidden]="description.valid || description.pristine" class="alert alert-danger">
+					description é required
+				</div>-->
+			</ion-item>
+			<ion-item>
+				<ion-label>Prioridade</ion-label>
+				<ion-select [(ngModel)]="task.priority">
+					<ion-option value="1">1</ion-option>
+					<ion-option value="2">2</ion-option>
+					<ion-option value="3">3</ion-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label>Data Limite</ion-label>
+				<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="task.limitAt" #limitAt></ion-datetime>
+			</ion-item>
+		</ion-list>
+		<button ion-button block type="submit" [disabled]="!taskForm.form.valid">Salvar</button>
+	</form>
+
+	<div *ngIf="selectedItem" class="selection">
+
+
+
+		<b>{{selectedItem.name}}</b>
+		<ion-icon name="{{selectedItem.description}}"></ion-icon>
+		<div>
+			ID: <b>{{selectedItem._id}}</b>
+		</div>
+	</div>
 </ion-content>

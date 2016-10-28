@@ -37,22 +37,4 @@
             </ion-note>
         </button>
     </ion-list>
-
-    <ion-list>
-        <ion-list-header>
-            Concluída
-        </ion-list-header>
-        <button ion-item *ngFor="let task of tasks">
-            <ion-note item-left>
-                <button ion-button icon-only clear (click)="taskRestore(event,task)">
-                    <ion-icon name="checkmark"></ion-icon>
-                </button>
-            </ion-note>
-            <p>{{task.name}}</p>
-            
-            
-        </button>
-
-    </ion-list>
-
 </ion-content>
