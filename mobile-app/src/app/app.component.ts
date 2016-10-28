@@ -92,5 +92,18 @@ export class MyApp {
         this.nav.setRoot(page.component);
     }
 
-    openProject(event, project) {}
+    openProject(project) {
+        // close the menu when clicking a link from the menu
+        this.menu.close();
+        this.mocksService
+            .setProject(project)
+            .then(bool => {
+                if (bool) {
+                    // navigate to the new page if it is not the current page
+                    this.nav.setRoot(TaskPage);
+                } else {
+                    // TODO: fazer
+                }
+            })
+    }
 }

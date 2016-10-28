@@ -9,11 +9,20 @@ import {
     ItemDetailsPage
 } from '../item-details/item-details';
 
+import {
+    MocksService
+} from './../../services/mocks.service';
+import {
+    Task
+} from './../../models/task.model';
+
 @Component({
     selector: 'page-task',
-    templateUrl: 'task.html'
+    templateUrl: 'task.html',
+    providers: [MocksService],
 })
 export class TaskPage {
+    tasks: Array < Task > ;
     selectedItem: any;
     icons: string[];
     items: Array < {
@@ -22,7 +31,7 @@ export class TaskPage {
         icon: string
     } > ;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public mocksService: MocksService) {
         // If we navigated to this page, we will have an item available as a nav param
         this.selectedItem = navParams.get('item');
 
@@ -38,13 +47,31 @@ export class TaskPage {
                 icon: this.icons[Math.floor(Math.random() * this.icons.length)]
             });
         }
+
+        mocksService
+            .getTask()
+            .then(tasks => {
+                this.tasks = tasks;
+            });
     }
 
     ionViewDidLoad() {}
 
-    itemTapped(event, item) {
+    taskTapped(task) {
         this.navCtrl.push(ItemDetailsPage, {
-            item: item
+            task: task
         });
+    }
+    taskCreate(event) {
+
+    }
+    taskComplete(event, task) {
+        event.stopPropagation();
+    }
+    taskEdit(event, task) {
+
+    }
+    taskRemove(event, task) {
+
     }
 }

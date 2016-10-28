@@ -9,45 +9,49 @@
 
 <ion-content padding>
     <ion-fab top right edge>
-        <button ion-fab color="vibrant" mini><ion-icon name="add"></ion-icon></button>
+        <button ion-fab color="vibrant" mini  (click)="taskCreate(event,task)">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </ion-fab>
 
     <ion-list>
-        <ion-item>
+        <button ion-item *ngFor="let task of tasks" (click)="taskTapped(task)">
             <ion-note item-left>
-                <button ion-button icon-only clear color="secondary">
-                  <ion-icon name="close"></ion-icon>
+                <button ion-button icon-only clear color="secondary" (click)="taskComplete(event,task)">
+                  <ion-icon name="square-outline"></ion-icon>
                 </button>
             </ion-note>
             <ion-note item-left>
                 <h1>1</h1>
             </ion-note>
-            <h2>Titulo</h2>
-            <p>Descrição</p>
+            <h2>{{task.name}}</h2>
+            <p>{{task.description}}</p>
             <ion-badge item-right>00/00/0000</ion-badge>
             <ion-note item-right>
-
-                <button ion-button icon-only clear>
+                <button ion-button icon-only clear (click)="taskEdit(event,task)">
                   <ion-icon name="create"></ion-icon>
                 </button>
-                <button ion-button icon-only clear color="danger">
+                <button ion-button icon-only clear color="danger" (click)="taskRemove(event,task)">
                   <ion-icon name="close"></ion-icon>
                 </button>
             </ion-note>
-        </ion-item>
+        </button>
     </ion-list>
 
     <ion-list>
         <ion-list-header>
             Concluída
         </ion-list-header>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
-    </button>
+        <button ion-item *ngFor="let task of tasks">
+            <ion-note item-left>
+                <button ion-button icon-only clear (click)="taskRestore(event,task)">
+                    <ion-icon name="checkmark"></ion-icon>
+                </button>
+            </ion-note>
+            <p>{{task.name}}</p>
+            
+            
+        </button>
 
     </ion-list>
 

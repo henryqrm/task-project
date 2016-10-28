@@ -37,6 +37,7 @@ export class ProjectsPage {
             this.newProject = {
                 _id: this.projects.length.toString(),
                 name: name.value,
+                tasks: [],
             }
             this.mocksService.add(this.newProject);
             name.value = null;

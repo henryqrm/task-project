@@ -11,14 +11,14 @@
             <ion-list-header>
                 Projetos
             </ion-list-header>
-            <ion-item *ngFor="let project of projects">
+            <button ion-item *ngFor="let project of projects" (click)="openProject(project)">
                 {{project.name}}
-            </ion-item>
+            </button>
         </ion-list>
         <ion-list>
             <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
-        {{page.title}}
-      </button>
+                {{page.title}}
+            </button>
         </ion-list>
     </ion-content>
 

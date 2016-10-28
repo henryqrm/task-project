@@ -9,10 +9,10 @@
 
 <ion-content>
  <div *ngIf="selectedItem" class="selection">
-    <b>{{selectedItem.title}}</b>
-    <ion-icon name="{{selectedItem.icon}}"></ion-icon>
+    <b>{{selectedItem.name}}</b>
+    <ion-icon name="{{selectedItem.description}}"></ion-icon>
     <div>
-      You navigated here from <b>{{selectedItem.title}}</b>
+      ID: <b>{{selectedItem._id}}</b>
     </div>
   </div>
 </ion-content>
