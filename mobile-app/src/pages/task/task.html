@@ -8,33 +8,41 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-fab top right edge>
-        <button ion-fab color="vibrant" mini  (click)="taskCreate(event,task)">
+    <ion-fab bottom right>
+        <button ion-fab (click)="taskCreate($event)">
             <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab top right edge>
+        <button ion-fab color="secondary" mini  (click)="taskArchive($event)">
+            <ion-icon name="archive"></ion-icon>
         </button>
     </ion-fab>
 
     <ion-list>
-        <button ion-item *ngFor="let task of tasks" (click)="taskTapped(task)">
+        <ion-item [hidden]="tasks">
+            <p>Nenhuma tarefa cadastrada</p>
+        </ion-item>
+        <ion-item *ngFor="let task of tasks">
             <ion-note item-left>
-                <button ion-button icon-only clear color="secondary" (click)="taskComplete(event,task)">
+                <button ion-button icon-only clear color="secondary" (click)="taskComplete($event,task)">
                   <ion-icon name="square-outline"></ion-icon>
                 </button>
             </ion-note>
-            <ion-note item-left>
-                <h1>1</h1>
+            <ion-note item-left class="margin-right-15">
+                <h1>{{task.priority}}</h1>
             </ion-note>
             <h2>{{task.name}}</h2>
             <p>{{task.description}}</p>
-            <ion-badge item-right>00/00/0000</ion-badge>
+            <ion-badge item-right>{{task.limitAt}}</ion-badge>
             <ion-note item-right>
-                <button ion-button icon-only clear (click)="taskEdit(event,task)">
+                <button ion-button icon-only clear (click)="taskEdit($event,task)">
                   <ion-icon name="create"></ion-icon>
                 </button>
-                <button ion-button icon-only clear color="danger" (click)="taskRemove(event,task)">
+                <button ion-button icon-only clear color="danger" (click)="taskRemove($event,task)">
                   <ion-icon name="close"></ion-icon>
                 </button>
             </ion-note>
-        </button>
+        </ion-item>
     </ion-list>
 </ion-content>

@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-navbar>
+        <button menuToggle>
+      		<ion-icon name="menu"></ion-icon>
+    	</button>
+        <ion-title>Nova tarefa</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm" novalidate>
+        <ion-list>
+
+            <ion-item>
+                <ion-label stacked>Nome</ion-label>
+                <ion-input type="text" #name name="name" placeholder="Escreva o nome da tarefa" [(ngModel)]="task.name" required></ion-input>
+            </ion-item>
+
+
+            <ion-item>
+                <ion-label stacked>Descrição</ion-label>
+                <ion-textarea name="description" placeholder="Escreva a descrição da tarefa" [(ngModel)]="task.description" required></ion-textarea>
+            </ion-item>
+
+
+
+            <ion-item>
+                <ion-label>Prioridade</ion-label>
+                <ion-select name="priority" [(ngModel)]="task.priority" required>
+                    <ion-option value="1">1</ion-option>
+                    <ion-option value="2">2</ion-option>
+                    <ion-option value="3">3</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Data Limite: {{task.limitAt}}</ion-label>
+                <ion-note item-right>
+                    <button ion-button icon-only clear (click)="getData()">
+                  		<ion-icon name="calendar"></ion-icon>
+                	</button>
+                </ion-note>
+                <ion-datetime name="limitAt" displayFormat="DD/MM/YYYY" [(ngModel)]="task.limitAt" required></ion-datetime>
+            </ion-item>
+
+        </ion-list>
+        <button ion-button block type="submit" [disabled]="!taskForm.form.valid">Salvar</button>
+    </form>
+</ion-content>

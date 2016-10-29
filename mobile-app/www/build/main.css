@@ -21118,3 +21118,7 @@ sub {
   text-align: center;
   padding-top: 5%;
 }
+
+page-task .margin-right-15 {
+  margin-right: 15px;
+}

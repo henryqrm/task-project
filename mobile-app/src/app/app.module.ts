@@ -6,6 +6,7 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { ProjectsPage } from '../pages/project/project';
 import { TaskPage } from '../pages/task/task';
+import { TaskCreateEditPage } from './../pages/task-create-edit/task-create-edit';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { TaskPage } from '../pages/task/task';
     ListPage,
     ProjectsPage,
     TaskPage,
+    TaskCreateEditPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -27,6 +29,7 @@ import { TaskPage } from '../pages/task/task';
     ListPage,
     ProjectsPage,
     TaskPage,
+    TaskCreateEditPage,
   ],
   providers: []
 })

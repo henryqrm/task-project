@@ -4,7 +4,7 @@ export class Task {
     description: string;
     // image: string;
     status: boolean;
-    // priority: number;
-    // limitAt: Date;
-    // createAt: Date;
+    priority: number;
+    limitAt: number;
+    createAt: number;
 }

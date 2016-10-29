@@ -15,15 +15,11 @@ let projects: Project[] = [{
         _id: '0',
         name: 'Name',
         description: 'Descrição',
-    }, {
-        _id: '1',
-        name: 'RRR',
-        description: 'GAD',
-    }, {
-        _id: '2',
-        name: 'XXX',
-        description: 'CADA',
-    },]
+        status: false,
+        priority: 3,
+        limitAt: Date.now(),
+        createAt: Date.now()
+    }, ]
 }, {
     _id: '1',
     name: 'Oiw',
@@ -32,17 +28,33 @@ let projects: Project[] = [{
     _id: '2',
     name: 'Much',
     tasks: []
-},];
+}, ];
 let project: Project;
 
 @Injectable()
 export class MocksService {
 
-    getProjects(): Promise<Project[]> {
+    getProjects(): Promise < Project[] > {
         return Promise.resolve(projects);
     }
-    
-    getTask(): Promise<Task[]> {
+
+    getTask(): Promise < Task[] > {
+        // let indexProject = projects.indexOf(project);
+        // let tasks: Task[];
+
+        // if (indexProject > -1) {
+        //     projects[indexProject].tasks.map(task => {
+        //         console.log('task',task);
+                
+        //         if (!task.status) {
+        //             console.log('task',task);
+                    
+        //             tasks.push(task);
+        //         }
+        //     });
+        // }
+        // return Promise.resolve(tasks);
+
         if (!project) {
             return Promise.reject(null);
         }
@@ -54,15 +66,27 @@ export class MocksService {
         projects.push(project);
     }
 
-    addTask(task: Task): Promise<Task> {
-        // task.status = false;
-        // task.createAt = Date.now();
+    addTask(task: Task): Promise < Task > {
+        if (task._id) {
+            return this.editTask(task);
+        }
+        let indexProject = projects.indexOf(project);
+        task.status = false;
+        task.createAt = Date.now();
+        task._id = projects[indexProject].tasks.length.toString();
         let index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
             return Promise.resolve(true);
         }
         return Promise.reject(false);
+    }
+
+    editTask(task: Task): Promise < Task > {
+        let indexProject = projects.indexOf(project);
+        let index = projects[indexProject].tasks.indexOf(task);
+        projects[indexProject].tasks[index] = task;
+        return Promise.resolve(true);
     }
 
     remove(project): void {
@@ -75,14 +99,20 @@ export class MocksService {
 
     removeTask(task): void {
         let indexProject = projects.indexOf(project);
-        let index = projects.indexOf(task);
+        let index = projects[indexProject].tasks.indexOf(task);
 
         if (index > -1 && indexProject > -1) {
             projects[indexProject].tasks.splice(index, 1);
         }
     }
 
-    setProject(proj): Promise<Project> {
+    completeTask(task){
+        let indexProject = projects.indexOf(project);
+        let index = projects[indexProject].tasks.indexOf(task);
+
+        projects[indexProject].tasks[index].status = true;
+    }
+    setProject(proj): Promise < Project > {
         project = proj;
         if (project) {
             return Promise.resolve(true);
@@ -90,7 +120,7 @@ export class MocksService {
         return Promise.reject(false);
     }
 
-    getTaskComplete(): Promise<Task[]> {
+    getTasksComplete(): Promise < Task[] > {
         let indexProject = projects.indexOf(project);
         let tasks: Task[];
 

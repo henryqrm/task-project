@@ -7,7 +7,7 @@ import { Task } from './../../models/task.model';
 
 @Component({
   templateUrl: 'item-details.html',
-  provider: [MocksService],
+  providers: [MocksService],
 })
 export class ItemDetailsPage {
   selectedItem: any;
