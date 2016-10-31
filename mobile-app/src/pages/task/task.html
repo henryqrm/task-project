@@ -25,7 +25,7 @@
         </ion-item>
         <ion-item *ngFor="let task of tasks">
             <ion-note item-left>
-                <button ion-button icon-only clear color="secondary" (click)="taskComplete($event,task)">
+                <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">
                   <ion-icon name="square-outline"></ion-icon>
                 </button>
             </ion-note>

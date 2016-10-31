@@ -9,8 +9,8 @@ import {
     AlertController
 } from 'ionic-angular';
 import {
-    ItemDetailsPage
-} from '../item-details/item-details';
+    TaskArchivePage
+} from '../task-archive/task-archive';
 
 import {
     MocksService
@@ -45,21 +45,22 @@ export class TaskPage {
         public mocksService: MocksService) {
         // If we navigated to this page, we will have an item available as a nav param
         this.selectedItem = navParams.get('item');
+    }
 
-        mocksService
-            .getTask()
+    ionViewDidLoad() {
+        this.mocksService
+            .getTask('pending')
             .then(tasks => {
                 this.tasks = tasks;
             });
     }
-
-    ionViewDidLoad() {}
     taskCreate(event) {
         this.navCtrl.push(TaskCreateEditPage, {});
     }
 
-    taskComplete(event, task) {
+    taskComplete(task, index) {
         this.mocksService.completeTask(task);
+        this.tasks.splice(index, 1);
         let toast = this.toastCtrl.create({
             message: 'Parabéns! \o/',
             position: 'bottom',
@@ -96,7 +97,7 @@ export class TaskPage {
         });
         confirm.present();
     }
-    taskArchive(event){
-        
+    taskArchive(event) {
+        this.navCtrl.push(TaskArchivePage, {});
     }
 }

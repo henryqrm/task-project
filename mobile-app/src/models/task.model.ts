@@ -3,7 +3,7 @@ export class Task {
     name: string;
     description: string;
     // image: string;
-    status: boolean;
+    status: string; 
     priority: number;
     limitAt: number;
     createAt: number;

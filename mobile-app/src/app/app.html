@@ -10,14 +10,14 @@
         <ion-list>
             <ion-list-header>
                 Projetos
+                <ion-note item-right>
+                    <button ion-button icon-only clear color="dark" (click)="openPage()">
+                        <ion-icon name="settings"></ion-icon>
+                    </button>
+                </ion-note>
             </ion-list-header>
             <button ion-item *ngFor="let project of projects" (click)="openProject(project)">
                 {{project.name}}
-            </button>
-        </ion-list>
-        <ion-list>
-            <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
-                {{page.title}}
             </button>
         </ion-list>
     </ion-content>
