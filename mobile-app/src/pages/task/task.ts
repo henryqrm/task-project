@@ -29,27 +29,23 @@ import {
     providers: [MocksService],
 })
 export class TaskPage {
-    tasks: Array < Task > ;
-    selectedItem: any;
-    icons: string[];
-    items: Array < {
-        title: string,
-        note: string,
-        icon: string
-    } > ;
+    tasks: any;
+    project: string;
 
     constructor(public toastCtrl: ToastController,
         public alertCtrl: AlertController,
         public navCtrl: NavController,
         public navParams: NavParams,
-        public mocksService: MocksService) {
-        // If we navigated to this page, we will have an item available as a nav param
-        this.selectedItem = navParams.get('item');
-    }
+        public mocksService: MocksService) {}
 
     ionViewDidLoad() {
         this.mocksService
-            .getTask('pending')
+            .getProject()
+            .then(project => {
+                this.project = project.name;
+            })
+        this.mocksService
+            .getTask()
             .then(tasks => {
                 this.tasks = tasks;
             });
@@ -59,8 +55,8 @@ export class TaskPage {
     }
 
     taskComplete(task, index) {
-        this.mocksService.completeTask(task);
-        this.tasks.splice(index, 1);
+        this.mocksService
+            .completeTask(task);
         let toast = this.toastCtrl.create({
             message: 'Parabéns! \o/',
             position: 'bottom',

@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>Cadastro de Projetos</ion-title>
+        <ion-title>{{project}} - Pendentes</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -14,16 +14,13 @@
         </button>
     </ion-fab>
     <ion-fab top right edge>
-        <button ion-fab color="secondary" mini  (click)="taskArchive($event)">
+        <button ion-fab color="secondary" mini (click)="taskArchive($event)">
             <ion-icon name="archive"></ion-icon>
         </button>
     </ion-fab>
 
     <ion-list>
-        <ion-item [hidden]="tasks">
-            <p>Nenhuma tarefa cadastrada</p>
-        </ion-item>
-        <ion-item *ngFor="let task of tasks">
+        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== 'pending'">
             <ion-note item-left>
                 <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">
                   <ion-icon name="square-outline"></ion-icon>

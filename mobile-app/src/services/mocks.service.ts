@@ -45,26 +45,30 @@ export class MocksService {
     getProjects(): Promise < Project[] > {
         return Promise.resolve(projects);
     }
+    getProject(): Promise < Project > {
+        return Promise.resolve(project);
+    }
 
-    getTask(status): Promise < Task[] > {
-        if(!status){
-            status = 'pending';
-        }
-        let indexProject = projects.indexOf(project);
-        let tasks = [];
-
-        for (let item of projects[indexProject].tasks) {
-            if (item.status === status) {
-                tasks.push(item);
-            }
-        }
-        return Promise.resolve(tasks);
-
-        // if (!project) {
-        //     return Promise.reject(null);
+    getTask(): Promise < Task[] > {
+        // if(!status){
+        //     status = 'pending';
         // }
-        // let index = projects.indexOf(project);
-        // return Promise.resolve(projects[index].tasks);
+        // let indexProject = projects.indexOf(project);
+        // let tasks = [];
+
+        // for (let item of projects[indexProject].tasks) {
+        //     if (item.status === status) {
+        //         tasks.push(item);
+        //     }
+        // }
+        // return Promise.resolve(tasks);
+
+        if (!project) {
+            return Promise.reject(null);
+        }
+        let index = projects.indexOf(project);
+
+        return Promise.resolve(projects[index].tasks);
     }
 
     add(project: Project): void {

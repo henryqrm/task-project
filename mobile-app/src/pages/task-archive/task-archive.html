@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>task-archive</ion-title>
+        <ion-title>{{project}} - Arquivados</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -15,7 +15,7 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let task of tasks">
+        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== 'completed'">
             <ion-note item-left class="margin-right-15">
                 <h1>{{task.priority}}</h1>
             </ion-note>

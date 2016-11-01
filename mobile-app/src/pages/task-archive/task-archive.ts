@@ -17,21 +17,27 @@ import {
 
 export class TaskArchivePage {
     tasks: any;
+    project: string;
     constructor(public toastCtrl: ToastController,
         public navCtrl: NavController,
         public navParams: NavParams,
-        public mocksService: MocksService) {
-    }
+        public mocksService: MocksService) {}
 
     ionViewDidLoad() {
-        this.mocksService.getTask('completed').then(tasks => {
-            this.tasks = tasks;
-        });
+        this.mocksService
+            .getProject()
+            .then(project => {
+                this.project = project.name;
+            })
+        this.mocksService
+            .getTask()
+            .then(tasks => {
+                this.tasks = tasks;
+            });
     }
     taskRestore(task, index) {
         this.mocksService
             .completeTask(task);
-        this.tasks.splice(index, 1);
         let toast = this.toastCtrl.create({
             message: 'Restaurado com sucesso.',
             position: 'bottom',
