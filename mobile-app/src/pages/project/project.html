@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>Cadastro de Projetos</ion-title>
+        <ion-title>Gerenciar Projetos</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
     <ion-list>
         <ion-item>
             <ion-label stacked>Nome</ion-label>
-            <ion-input type="text" placeholder="Escreva o nome do projeto" #name></ion-input>
+            <ion-input type="text" placeholder="Escreva o nome do projeto" #name (keyup.enter)="add(name)"></ion-input>
             <ion-note item-right>
                 <button ion-button icon-only clear (click)="add(name)">
                   <ion-icon name="send"></ion-icon>

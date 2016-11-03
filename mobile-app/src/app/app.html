@@ -2,11 +2,16 @@
 
     <ion-header>
         <ion-toolbar>
-            <ion-title>Pages</ion-title>
+            <ion-title>Menu</ion-title>
         </ion-toolbar>
     </ion-header>
 
     <ion-content>
+        <ion-list>
+            <button ion-item (click)="open()">
+                Inicio
+            </button>
+        </ion-list>
         <ion-list>
             <ion-list-header>
                 Projetos
@@ -20,7 +25,16 @@
                 {{project.name}}
             </button>
         </ion-list>
+        <div padding *ngIf="isEmpty()">
+            <button ion-button ion-padding block (click)="openPage()">Cadastrar novo projeto</button>
+        </div>
+
     </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <ion-note>Task-Project-beta v0.1.0</ion-note>
+        </ion-toolbar>
+    </ion-footer>
 
 </ion-menu>
 

@@ -8,8 +8,7 @@ import {
 
 import {
     NavController,
-    NavParams,
-    Nav
+    NavParams
 } from 'ionic-angular';
 import {
     MocksService
@@ -18,10 +17,6 @@ import {
 import {
     Task
 } from './../../models/task.model';
-
-import {
-    TaskPage
-} from './../task/task';
 
 @Component({
     selector: 'page-task-create-edit',
@@ -46,7 +41,6 @@ export class TaskCreateEditPage {
         this.mocksService
             .addTask(this.task)
             .then(res => {
-                // this.nav.setRoot(TaskPage);
                 this.navCtrl.pop();
             });
     }

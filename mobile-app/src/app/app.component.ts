@@ -17,9 +17,6 @@ import {
     HelloIonicPage
 } from '../pages/hello-ionic/hello-ionic';
 import {
-    ListPage
-} from '../pages/list/list';
-import {
     ProjectsPage
 } from '../pages/project/project';
 import {
@@ -56,6 +53,20 @@ export class MyApp {
             StatusBar.styleDefault();
         });
     }
+
+    open() {
+        // close the menu when clicking a link from the menu
+        this.menu.close();
+        // navigate to the new page if it is not the current page
+        this.nav.setRoot(this.rootPage);
+    }
+
+    isEmpty() {
+        if (!this.projects) {
+            return true;
+        }
+        return this.projects.length === 0 ? true : false;
+    };
 
     getProjects(): void {
         this.mocksService

@@ -11,6 +11,7 @@ import {
 } from '../../services/mocks.service';
 
 @Component({
+    selector: 'page-task-archive',
     templateUrl: 'task-archive.html',
     providers: [MocksService],
 })
@@ -35,6 +36,20 @@ export class TaskArchivePage {
                 this.tasks = tasks;
             });
     }
+
+    isEmpty() {
+        let length = 0;
+        if(!this.tasks){
+            return true;
+        }
+        this.tasks.map(task=>{
+            if(task.status === 'completed'){
+                length += 1;
+            }
+        })
+        return length === 0 ? true : false;
+    };
+
     taskRestore(task, index) {
         this.mocksService
             .completeTask(task);

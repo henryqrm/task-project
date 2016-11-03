@@ -8,39 +8,24 @@ import {
     Task
 } from './../models/task.model';
 
-let projects: Project[] = [{
-    _id: '0',
-    name: 'Test',
-    tasks: [{
-        _id: '0',
-        name: 'Name',
-        description: 'Descrição',
-        status: 'pending',
-        priority: 3,
-        limitAt: Date.now(),
-        createAt: Date.now()
-    }, {
-        _id: '1',
-        name: 'Archive',
-        description: 'Descrição',
-        status: 'pending',
-        priority: 3,
-        limitAt: Date.now(),
-        createAt: Date.now()
-    }, ]
-}, {
-    _id: '1',
-    name: 'Oiw',
-    tasks: []
-}, {
-    _id: '2',
-    name: 'Much',
-    tasks: []
-}, ];
+import { Storage } from '@ionic/storage';
+
+let projects: Project[];
 let project: Project;
+let localstorage: Storage;
+
 
 @Injectable()
 export class MocksService {
+
+    constructor(){
+        if(!localStorage.getItem('task')){
+            projects = [];
+        } else {
+            projects = JSON.parse(localStorage.getItem('task'));
+            console.log(projects);
+        }
+    }
 
     getProjects(): Promise < Project[] > {
         return Promise.resolve(projects);
@@ -49,20 +34,11 @@ export class MocksService {
         return Promise.resolve(project);
     }
 
+    save() {
+        localStorage.setItem('task', JSON.stringify(projects));
+    }
+
     getTask(): Promise < Task[] > {
-        // if(!status){
-        //     status = 'pending';
-        // }
-        // let indexProject = projects.indexOf(project);
-        // let tasks = [];
-
-        // for (let item of projects[indexProject].tasks) {
-        //     if (item.status === status) {
-        //         tasks.push(item);
-        //     }
-        // }
-        // return Promise.resolve(tasks);
-
         if (!project) {
             return Promise.reject(null);
         }
@@ -73,6 +49,7 @@ export class MocksService {
 
     add(project: Project): void {
         projects.push(project);
+        this.save();
     }
 
     addTask(task: Task): Promise < Task > {
@@ -86,6 +63,7 @@ export class MocksService {
         let index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
+            this.save();
             return Promise.resolve(true);
         }
         return Promise.reject(false);
@@ -95,6 +73,7 @@ export class MocksService {
         let indexProject = projects.indexOf(project);
         let index = projects[indexProject].tasks.indexOf(task);
         projects[indexProject].tasks[index] = task;
+        this.save();
         return Promise.resolve(true);
     }
 
@@ -103,6 +82,7 @@ export class MocksService {
 
         if (index > -1) {
             projects.splice(index, 1);
+            this.save();
         }
     }
 
@@ -111,6 +91,7 @@ export class MocksService {
         let index = projects[indexProject].tasks.indexOf(task);
 
         if (index > -1 && indexProject > -1) {
+            this.save();
             projects[indexProject].tasks.splice(index, 1);
         }
     }
@@ -124,6 +105,7 @@ export class MocksService {
         } else {
             projects[indexProject].tasks[index].status = 'pending';
         }
+        this.save();
     }
     setProject(proj): Promise < Project > {
         project = proj;

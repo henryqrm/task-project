@@ -21106,10 +21106,18 @@ sub {
   }
 }
 
-.hello-ionic-page p {
-  margin: 20px 0;
-  line-height: 22px;
-  font-size: 16px;
+.flex {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.center-flex {
+  width: 20%;
 }
 
 .item-details-page div.selection {
@@ -21121,4 +21129,12 @@ sub {
 
 page-task .margin-right-15 {
   margin-right: 15px;
+}
+
+page-task .center {
+  text-align: center;
+}
+
+page-task-archive .center {
+  text-align: center;
 }

@@ -81049,7 +81049,7 @@ var HelloIonicPage = (function () {
     function HelloIonicPage() {
     }
     HelloIonicPage = __decorate$108([
-        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/hello-ionic/hello-ionic.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hello Ionic</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <h3>Welcome to your first Ionic app!</h3>\n\n  <p>\n    This starter project is our way of helping you get a functional app running in record time.\n  </p>\n  <p>\n    Follow along on the tutorial section of the Ionic docs!\n  </p>\n  <p>\n    <button ion-button color="primary" menuToggle>Toggle Menu</button>\n  </p>\n\n</ion-content>\n'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/hello-ionic/hello-ionic.html"*/
+        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/hello-ionic/hello-ionic.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Task Project v0.1.0</ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <div class="flex">\n        <div class="center-flex">\n            <h3>Trabalho do grupo 17</h3>\n            <p>\n                Membros:\n            </p>\n            <ul>\n                <li>Barbara Luiza</li>\n                <li>Felipe Miranda</li>\n                <li>Gustavo Pereira</li>\n                <li>Henrique Rodrigues</li>\n                <li>Luis Claudio</li>\n            </ul>\n            <p>\n                <button ion-button color="primary" menuToggle>Abrir menu</button>\n            </p>\n        </div>\n    </div>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/hello-ionic/hello-ionic.html"*/
         }), 
         __metadata$2('design:paramtypes', [])
     ], HelloIonicPage);
@@ -81065,38 +81065,17 @@ var __decorate$110 = (undefined && undefined.__decorate) || function (decorators
 var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var projects = [{
-        _id: '0',
-        name: 'Test',
-        tasks: [{
-                _id: '0',
-                name: 'Name',
-                description: 'Descrição',
-                status: 'pending',
-                priority: 3,
-                limitAt: Date.now(),
-                createAt: Date.now()
-            }, {
-                _id: '1',
-                name: 'Archive',
-                description: 'Descrição',
-                status: 'pending',
-                priority: 3,
-                limitAt: Date.now(),
-                createAt: Date.now()
-            },]
-    }, {
-        _id: '1',
-        name: 'Oiw',
-        tasks: []
-    }, {
-        _id: '2',
-        name: 'Much',
-        tasks: []
-    },];
+var projects;
 var project;
 var MocksService = (function () {
     function MocksService() {
+        if (!localStorage.getItem('task')) {
+            projects = [];
+        }
+        else {
+            projects = JSON.parse(localStorage.getItem('task'));
+            console.log(projects);
+        }
     }
     MocksService.prototype.getProjects = function () {
         return Promise.resolve(projects);
@@ -81104,18 +81083,10 @@ var MocksService = (function () {
     MocksService.prototype.getProject = function () {
         return Promise.resolve(project);
     };
+    MocksService.prototype.save = function () {
+        localStorage.setItem('task', JSON.stringify(projects));
+    };
     MocksService.prototype.getTask = function () {
-        // if(!status){
-        //     status = 'pending';
-        // }
-        // let indexProject = projects.indexOf(project);
-        // let tasks = [];
-        // for (let item of projects[indexProject].tasks) {
-        //     if (item.status === status) {
-        //         tasks.push(item);
-        //     }
-        // }
-        // return Promise.resolve(tasks);
         if (!project) {
             return Promise.reject(null);
         }
@@ -81124,6 +81095,7 @@ var MocksService = (function () {
     };
     MocksService.prototype.add = function (project) {
         projects.push(project);
+        this.save();
     };
     MocksService.prototype.addTask = function (task) {
         if (task._id) {
@@ -81136,6 +81108,7 @@ var MocksService = (function () {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
+            this.save();
             return Promise.resolve(true);
         }
         return Promise.reject(false);
@@ -81144,18 +81117,21 @@ var MocksService = (function () {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         projects[indexProject].tasks[index] = task;
+        this.save();
         return Promise.resolve(true);
     };
     MocksService.prototype.remove = function (project) {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects.splice(index, 1);
+            this.save();
         }
     };
     MocksService.prototype.removeTask = function (task) {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         if (index > -1 && indexProject > -1) {
+            this.save();
             projects[indexProject].tasks.splice(index, 1);
         }
     };
@@ -81168,6 +81144,7 @@ var MocksService = (function () {
         else {
             projects[indexProject].tasks[index].status = 'pending';
         }
+        this.save();
     };
     MocksService.prototype.setProject = function (proj) {
         project = proj;
@@ -81242,7 +81219,7 @@ var ProjectsPage = (function () {
     };
     ProjectsPage = __decorate$109([
         Component({
-            selector: 'page-project',template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/project/project.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Cadastro de Projetos</ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-label stacked>Nome</ion-label>\n            <ion-input type="text" placeholder="Escreva o nome do projeto" #name></ion-input>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="add(name)">\n                  <ion-icon name="send"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n        <ion-item *ngFor="let project of projects">\n            <h2>{{project.name}}</h2>\n            <ion-note item-right>\n                <button ion-button icon-only clear color="danger" (click)="remove(project)">\n                  <ion-icon name="trash"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/project/project.html"*/,
+            selector: 'page-project',template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/project/project.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Gerenciar Projetos</ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-label stacked>Nome</ion-label>\n            <ion-input type="text" placeholder="Escreva o nome do projeto" #name (keyup.enter)="add(name)"></ion-input>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="add(name)">\n                  <ion-icon name="send"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n        <ion-item *ngFor="let project of projects">\n            <h2>{{project.name}}</h2>\n            <ion-note item-right>\n                <button ion-button icon-only clear color="danger" (click)="remove(project)">\n                  <ion-icon name="trash"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/project/project.html"*/,
             providers: [],
         }), 
         __metadata$3('design:paramtypes', [NavController, ToastController, AlertController, MocksService])
@@ -81279,6 +81256,19 @@ var TaskArchivePage = (function () {
             _this.tasks = tasks;
         });
     };
+    TaskArchivePage.prototype.isEmpty = function () {
+        var length = 0;
+        if (!this.tasks) {
+            return true;
+        }
+        this.tasks.map(function (task) {
+            if (task.status === 'completed') {
+                length += 1;
+            }
+        });
+        return length === 0 ? true : false;
+    };
+    
     TaskArchivePage.prototype.taskRestore = function (task, index) {
         this.mocksService
             .completeTask(task);
@@ -81290,7 +81280,8 @@ var TaskArchivePage = (function () {
         toast.present();
     };
     TaskArchivePage = __decorate$112([
-        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task-archive/task-archive.html"*/'<!--\n  Generated template for the TaskArchive page.\n\n  See http://ionicframework.com/docs/v2/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>{{project}} - Arquivados</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== \'completed\'">\n            <ion-note item-left class="margin-right-15">\n                <h1>{{task.priority}}</h1>\n            </ion-note>\n            <h2>{{task.name}}</h2>\n            <p>{{task.description}}</p>\n            <ion-badge item-right>{{task.limitAt}}</ion-badge>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="taskRestore(task, $index)">\n                  <ion-icon name="share-alt"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task-archive/task-archive.html"*/,
+        Component({
+            selector: 'page-task-archive',template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task-archive/task-archive.html"*/'<!--\n  Generated template for the TaskArchive page.\n\n  See http://ionicframework.com/docs/v2/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>{{project}} - Arquivados</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-item *ngIf="isEmpty()" class="center">\n            <ion-note>Nenhuma tarefa arquivada.</ion-note>\n        </ion-item>\n        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== \'completed\'">\n            <ion-note item-left class="margin-right-15">\n                <h1>{{task.priority}}</h1>\n            </ion-note>\n            <h2>{{task.name}}</h2>\n            <p>{{task.description}}</p>\n            <ion-badge item-right>{{task.limitAt}}</ion-badge>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="taskRestore(task, $index)">\n                  <ion-icon name="share-alt"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task-archive/task-archive.html"*/,
             providers: [MocksService],
         }), 
         __metadata$6('design:paramtypes', [ToastController, NavController, NavParams, MocksService])
@@ -81328,7 +81319,6 @@ var TaskCreateEditPage = (function () {
         this.mocksService
             .addTask(this.task)
             .then(function (res) {
-            // this.nav.setRoot(TaskPage);
             _this.navCtrl.pop();
         });
     };
@@ -81378,6 +81368,19 @@ var TaskPage = (function () {
             _this.tasks = tasks;
         });
     };
+    TaskPage.prototype.isEmpty = function () {
+        var length = 0;
+        if (!this.tasks) {
+            return true;
+        }
+        this.tasks.map(function (task) {
+            if (task.status === 'pending') {
+                length += 1;
+            }
+        });
+        return length === 0 ? true : false;
+    };
+    
     TaskPage.prototype.taskCreate = function (event) {
         this.navCtrl.push(TaskCreateEditPage, {});
     };
@@ -81423,7 +81426,7 @@ var TaskPage = (function () {
     };
     TaskPage = __decorate$111([
         Component({
-            selector: 'page-task',template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task/task.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>{{project}} - Pendentes</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-fab bottom right>\n        <button ion-fab (click)="taskCreate($event)">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-fab>\n    <ion-fab top right edge>\n        <button ion-fab color="secondary" mini (click)="taskArchive($event)">\n            <ion-icon name="archive"></ion-icon>\n        </button>\n    </ion-fab>\n\n    <ion-list>\n        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== \'pending\'">\n            <ion-note item-left>\n                <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">\n                  <ion-icon name="square-outline"></ion-icon>\n                </button>\n            </ion-note>\n            <ion-note item-left class="margin-right-15">\n                <h1>{{task.priority}}</h1>\n            </ion-note>\n            <h2>{{task.name}}</h2>\n            <p>{{task.description}}</p>\n            <ion-badge item-right>{{task.limitAt}}</ion-badge>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="taskEdit($event,task)">\n                  <ion-icon name="create"></ion-icon>\n                </button>\n                <button ion-button icon-only clear color="danger" (click)="taskRemove($event,task)">\n                  <ion-icon name="close"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task/task.html"*/,
+            selector: 'page-task',template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task/task.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>{{project}} - Pendentes</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-fab bottom right>\n        <button ion-fab (click)="taskCreate($event)">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-fab>\n    <ion-fab top right edge>\n        <button ion-fab color="secondary" mini (click)="taskArchive($event)">\n            <ion-icon name="archive"></ion-icon>\n        </button>\n    </ion-fab>\n\n    <ion-list>\n        <ion-item *ngIf="isEmpty()" class="center">\n            <ion-note>Nenhuma tarefa pendente.</ion-note>\n        </ion-item>\n        <ion-item *ngFor="let task of tasks" [hidden]="task.status !== \'pending\'">\n            <ion-note item-left>\n                <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">\n                  <ion-icon name="square-outline"></ion-icon>\n                </button>\n            </ion-note>\n            <ion-note item-left class="margin-right-15">\n                <h1>{{task.priority}}</h1>\n            </ion-note>\n            <h2>{{task.name}}</h2>\n            <p>{{task.description}}</p>\n            <ion-badge item-right>{{task.limitAt}}</ion-badge>\n            <ion-note item-right>\n                <button ion-button icon-only clear (click)="taskEdit($event,task)">\n                  <ion-icon name="create"></ion-icon>\n                </button>\n                <button ion-button icon-only clear color="danger" (click)="taskRemove($event,task)">\n                  <ion-icon name="close"></ion-icon>\n                </button>\n            </ion-note>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/task/task.html"*/,
             providers: [MocksService],
         }), 
         __metadata$5('design:paramtypes', [ToastController, AlertController, NavController, NavParams, MocksService])
@@ -81456,6 +81459,19 @@ var MyApp = (function () {
             StatusBar.styleDefault();
         });
     };
+    MyApp.prototype.open = function () {
+        // close the menu when clicking a link from the menu
+        this.menu.close();
+        // navigate to the new page if it is not the current page
+        this.nav.setRoot(this.rootPage);
+    };
+    MyApp.prototype.isEmpty = function () {
+        if (!this.projects) {
+            return true;
+        }
+        return this.projects.length === 0 ? true : false;
+    };
+    
     MyApp.prototype.getProjects = function () {
         var _this = this;
         this.mocksService
@@ -81493,86 +81509,12 @@ var MyApp = (function () {
         __metadata$1('design:type', Nav)
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate$1([
-        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/app/app.html"*/'<ion-menu [content]="content">\n\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Pages</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <ion-list-header>\n                Projetos\n                <ion-note item-right>\n                    <button ion-button icon-only clear color="dark" (click)="openPage()">\n                        <ion-icon name="settings"></ion-icon>\n                    </button>\n                </ion-note>\n            </ion-list-header>\n            <button ion-item *ngFor="let project of projects" (click)="openProject(project)">\n                {{project.name}}\n            </button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/app/app.html"*/,
+        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/app/app.html"*/'<ion-menu [content]="content">\n\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button ion-item (click)="open()">\n                Inicio\n            </button>\n        </ion-list>\n        <ion-list>\n            <ion-list-header>\n                Projetos\n                <ion-note item-right>\n                    <button ion-button icon-only clear color="dark" (click)="openPage()">\n                        <ion-icon name="settings"></ion-icon>\n                    </button>\n                </ion-note>\n            </ion-list-header>\n            <button ion-item *ngFor="let project of projects" (click)="openProject(project)">\n                {{project.name}}\n            </button>\n        </ion-list>\n        <div padding *ngIf="isEmpty()">\n            <button ion-button ion-padding block (click)="openPage()">Cadastrar novo projeto</button>\n        </div>\n\n    </ion-content>\n    <ion-footer>\n        <ion-toolbar>\n            <ion-note>Task-Project-beta v0.1.0</ion-note>\n        </ion-toolbar>\n    </ion-footer>\n\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/app/app.html"*/,
             providers: [MocksService],
         }), 
         __metadata$1('design:paramtypes', [Platform, MenuController, MocksService])
     ], MyApp);
     return MyApp;
-}());
-
-var __decorate$114 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$8 = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var ItemDetailsPage = (function () {
-    function ItemDetailsPage(navCtrl, navParams, mocksService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.mocksService = mocksService;
-        // If we navigated to this page, we will have an item available as a nav param
-        this.selectedItem = navParams.get('task');
-    }
-    ItemDetailsPage.prototype.add = function () {
-        this.mocksService
-            .addTask(this.task).then(function (res) {
-            if (res) {
-            }
-            else {
-            }
-        });
-    };
-    ItemDetailsPage = __decorate$114([
-        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/item-details/item-details.html"*/'<ion-header>\n	<ion-navbar>\n		<button menuToggle *ngIf="!selectedItem">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n		<ion-title>Item Details</ion-title>\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<form *ngIf="selectedItem" (ngSubmit)="onSubmit()" #taskForm="ngForm">\n		<ion-list>\n			<ion-item>\n				<ion-label stacked>Nome</ion-label>\n				<ion-input type="text" placeholder="Escreva o nome da tarefa" [(ngModel)]="task.name" required #name></ion-input>\n				<!--<div [hidden]="name.valid || name.pristine" class="alert alert-danger">\n					Name é required\n				</div>-->\n			</ion-item>\n			<ion-item>\n				<ion-label stacked>Descrição</ion-label>\n				<ion-textarea placeholder="Escreva a descrição da tarefa" [(ngModel)]="task.description" required #description></ion-textarea>\n				<!--<div [hidden]="description.valid || description.pristine" class="alert alert-danger">\n					description é required\n				</div>-->\n			</ion-item>\n			<ion-item>\n				<ion-label>Prioridade</ion-label>\n				<ion-select [(ngModel)]="task.priority">\n					<ion-option value="1">1</ion-option>\n					<ion-option value="2">2</ion-option>\n					<ion-option value="3">3</ion-option>\n				</ion-select>\n			</ion-item>\n			<ion-item>\n				<ion-label>Data Limite</ion-label>\n				<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="task.limitAt" #limitAt></ion-datetime>\n			</ion-item>\n		</ion-list>\n		<button ion-button block type="submit" [disabled]="!taskForm.form.valid">Salvar</button>\n	</form>\n\n	<div *ngIf="selectedItem" class="selection">\n\n\n\n		<b>{{selectedItem.name}}</b>\n		<ion-icon name="{{selectedItem.description}}"></ion-icon>\n		<div>\n			ID: <b>{{selectedItem._id}}</b>\n		</div>\n	</div>\n</ion-content>'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/item-details/item-details.html"*/,
-            providers: [MocksService],
-        }), 
-        __metadata$8('design:paramtypes', [NavController, NavParams, MocksService])
-    ], ItemDetailsPage);
-    return ItemDetailsPage;
-}());
-
-var __decorate$115 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$9 = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var ListPage = (function () {
-    function ListPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        // If we navigated to this page, we will have an item available as a nav param
-        this.selectedItem = navParams.get('item');
-        this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-            'american-football', 'boat', 'bluetooth', 'build'];
-        this.items = [];
-        for (var i = 1; i < 11; i++) {
-            this.items.push({
-                title: 'Item ' + i,
-                note: 'This is item #' + i,
-                icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-            });
-        }
-    }
-    ListPage.prototype.itemTapped = function (event, item) {
-        this.navCtrl.push(ItemDetailsPage, {
-            item: item
-        });
-    };
-    ListPage = __decorate$115([
-        Component({template:/*ion-inline-start:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>My First List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/henryqrm/Documents/task-project/mobile-app/src/pages/list/list.html"*/
-        }), 
-        __metadata$9('design:paramtypes', [NavController, NavParams])
-    ], ListPage);
-    return ListPage;
 }());
 
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -81592,8 +81534,6 @@ var AppModule = (function () {
             declarations: [
                 MyApp,
                 HelloIonicPage,
-                ItemDetailsPage,
-                ListPage,
                 ProjectsPage,
                 TaskPage,
                 TaskCreateEditPage,
@@ -81606,8 +81546,6 @@ var AppModule = (function () {
             entryComponents: [
                 MyApp,
                 HelloIonicPage,
-                ItemDetailsPage,
-                ListPage,
                 ProjectsPage,
                 TaskPage,
                 TaskCreateEditPage,

@@ -20,6 +20,9 @@
     </ion-fab>
 
     <ion-list>
+        <ion-item *ngIf="isEmpty()" class="center">
+            <ion-note>Nenhuma tarefa pendente.</ion-note>
+        </ion-item>
         <ion-item *ngFor="let task of tasks" [hidden]="task.status !== 'pending'">
             <ion-note item-left>
                 <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">

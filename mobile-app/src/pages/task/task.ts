@@ -1,6 +1,5 @@
 import {
     Component,
-    ChangeDetectionStrategy,
 } from '@angular/core';
 import {
     NavController,
@@ -15,9 +14,6 @@ import {
 import {
     MocksService
 } from './../../services/mocks.service';
-import {
-    Task
-} from './../../models/task.model';
 
 import {
     TaskCreateEditPage
@@ -50,6 +46,20 @@ export class TaskPage {
                 this.tasks = tasks;
             });
     }
+
+    isEmpty() {
+        let length = 0;
+        if(!this.tasks){
+            return true;
+        }
+        this.tasks.map(task=>{
+            if(task.status === 'pending'){
+                length += 1;
+            }
+        })
+        return length === 0 ? true : false;
+    };
+
     taskCreate(event) {
         this.navCtrl.push(TaskCreateEditPage, {});
     }
