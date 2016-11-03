@@ -77,7 +77,11 @@ export class MyApp {
     }
 
     ngOnInit(): void {
-        this.getProjects();
+        this.mocksService
+            .load()
+            .then(a => {
+                this.getProjects();
+            });
     }
 
     openPage(page) {

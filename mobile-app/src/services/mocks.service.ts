@@ -20,12 +20,13 @@ let localstorage: Storage;
 @Injectable()
 export class MocksService {
 
-    constructor() {
-        // if (localStorage.getItem('task')) {
-        //     projects = JSON.parse(localStorage.getItem('task'));
-        // } else {
-        //     projects = [];
-        // }
+    load(): Promise < boolean > {
+        if (localStorage.getItem('task')) {
+            projects = JSON.parse(localStorage.getItem('task'));
+        } else {
+            projects = [];
+        }
+        return Promise.resolve(true);
     }
 
     getProjects(): Promise < Project[] > {
@@ -36,9 +37,9 @@ export class MocksService {
         return Promise.resolve(project);
     }
 
-    // save() {
-    //     localStorage.setItem('task', JSON.stringify(projects));
-    // }
+    save() {
+        localStorage.setItem('task', JSON.stringify(projects));
+    }
 
     getTask(): Promise < Task[] > {
         if (!project) {
@@ -51,7 +52,7 @@ export class MocksService {
 
     add(project: Project): void {
         projects.push(project);
-        // this.save();
+        this.save();
     }
 
     addTask(task: Task): Promise < Task > {
@@ -65,7 +66,7 @@ export class MocksService {
         let index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
-            // this.save();
+            this.save();
             return Promise.resolve(true);
         }
         return Promise.reject(false);
@@ -75,7 +76,7 @@ export class MocksService {
         let indexProject = projects.indexOf(project);
         let index = projects[indexProject].tasks.indexOf(task);
         projects[indexProject].tasks[index] = task;
-        // this.save();
+        this.save();
         return Promise.resolve(true);
     }
 
@@ -84,7 +85,7 @@ export class MocksService {
 
         if (index > -1) {
             projects.splice(index, 1);
-            // this.save();
+            this.save();
         }
     }
 
@@ -93,7 +94,7 @@ export class MocksService {
         let index = projects[indexProject].tasks.indexOf(task);
 
         if (index > -1 && indexProject > -1) {
-            // this.save();
+            this.save();
             projects[indexProject].tasks.splice(index, 1);
         }
     }
@@ -107,7 +108,7 @@ export class MocksService {
         } else {
             projects[indexProject].tasks[index].status = 'pending';
         }
-        // this.save();
+        this.save();
     }
     setProject(proj): Promise < Project > {
         project = proj;

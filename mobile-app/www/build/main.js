@@ -81069,21 +81069,25 @@ var projects = [];
 var project;
 var MocksService = (function () {
     function MocksService() {
-        // if (localStorage.getItem('task')) {
-        //     projects = JSON.parse(localStorage.getItem('task'));
-        // } else {
-        //     projects = [];
-        // }
     }
+    MocksService.prototype.load = function () {
+        if (localStorage.getItem('task')) {
+            projects = JSON.parse(localStorage.getItem('task'));
+        }
+        else {
+            projects = [];
+        }
+        return Promise.resolve(true);
+    };
     MocksService.prototype.getProjects = function () {
         return Promise.resolve(projects);
     };
     MocksService.prototype.getProject = function () {
         return Promise.resolve(project);
     };
-    // save() {
-    //     localStorage.setItem('task', JSON.stringify(projects));
-    // }
+    MocksService.prototype.save = function () {
+        localStorage.setItem('task', JSON.stringify(projects));
+    };
     MocksService.prototype.getTask = function () {
         if (!project) {
             return Promise.reject(null);
@@ -81093,7 +81097,7 @@ var MocksService = (function () {
     };
     MocksService.prototype.add = function (project) {
         projects.push(project);
-        // this.save();
+        this.save();
     };
     MocksService.prototype.addTask = function (task) {
         if (task._id) {
@@ -81106,7 +81110,7 @@ var MocksService = (function () {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
-            // this.save();
+            this.save();
             return Promise.resolve(true);
         }
         return Promise.reject(false);
@@ -81115,20 +81119,21 @@ var MocksService = (function () {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         projects[indexProject].tasks[index] = task;
-        // this.save();
+        this.save();
         return Promise.resolve(true);
     };
     MocksService.prototype.remove = function (project) {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects.splice(index, 1);
+            this.save();
         }
     };
     MocksService.prototype.removeTask = function (task) {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         if (index > -1 && indexProject > -1) {
-            // this.save();
+            this.save();
             projects[indexProject].tasks.splice(index, 1);
         }
     };
@@ -81141,7 +81146,7 @@ var MocksService = (function () {
         else {
             projects[indexProject].tasks[index].status = 'pending';
         }
-        // this.save();
+        this.save();
     };
     MocksService.prototype.setProject = function (proj) {
         project = proj;
@@ -81478,7 +81483,12 @@ var MyApp = (function () {
         });
     };
     MyApp.prototype.ngOnInit = function () {
-        this.getProjects();
+        var _this = this;
+        this.mocksService
+            .load()
+            .then(function (a) {
+            _this.getProjects();
+        });
     };
     MyApp.prototype.openPage = function (page) {
         // close the menu when clicking a link from the menu
