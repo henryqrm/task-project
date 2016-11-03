@@ -81065,17 +81065,15 @@ var __decorate$110 = (undefined && undefined.__decorate) || function (decorators
 var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var projects;
+var projects = [];
 var project;
 var MocksService = (function () {
     function MocksService() {
-        if (!localStorage.getItem('task')) {
-            projects = [];
-        }
-        else {
-            projects = JSON.parse(localStorage.getItem('task'));
-            console.log(projects);
-        }
+        // if (localStorage.getItem('task')) {
+        //     projects = JSON.parse(localStorage.getItem('task'));
+        // } else {
+        //     projects = [];
+        // }
     }
     MocksService.prototype.getProjects = function () {
         return Promise.resolve(projects);
@@ -81083,9 +81081,9 @@ var MocksService = (function () {
     MocksService.prototype.getProject = function () {
         return Promise.resolve(project);
     };
-    MocksService.prototype.save = function () {
-        localStorage.setItem('task', JSON.stringify(projects));
-    };
+    // save() {
+    //     localStorage.setItem('task', JSON.stringify(projects));
+    // }
     MocksService.prototype.getTask = function () {
         if (!project) {
             return Promise.reject(null);
@@ -81095,7 +81093,7 @@ var MocksService = (function () {
     };
     MocksService.prototype.add = function (project) {
         projects.push(project);
-        this.save();
+        // this.save();
     };
     MocksService.prototype.addTask = function (task) {
         if (task._id) {
@@ -81108,7 +81106,7 @@ var MocksService = (function () {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects[index].tasks.push(task);
-            this.save();
+            // this.save();
             return Promise.resolve(true);
         }
         return Promise.reject(false);
@@ -81117,21 +81115,20 @@ var MocksService = (function () {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         projects[indexProject].tasks[index] = task;
-        this.save();
+        // this.save();
         return Promise.resolve(true);
     };
     MocksService.prototype.remove = function (project) {
         var index = projects.indexOf(project);
         if (index > -1) {
             projects.splice(index, 1);
-            this.save();
         }
     };
     MocksService.prototype.removeTask = function (task) {
         var indexProject = projects.indexOf(project);
         var index = projects[indexProject].tasks.indexOf(task);
         if (index > -1 && indexProject > -1) {
-            this.save();
+            // this.save();
             projects[indexProject].tasks.splice(index, 1);
         }
     };
@@ -81144,7 +81141,7 @@ var MocksService = (function () {
         else {
             projects[indexProject].tasks[index].status = 'pending';
         }
-        this.save();
+        // this.save();
     };
     MocksService.prototype.setProject = function (proj) {
         project = proj;
