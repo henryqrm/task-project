@@ -3,11 +3,8 @@ import {
 } from '@angular/core';
 
 import {
-    DatePicker
-} from 'ionic-native';
-
-import {
     NavController,
+    ToastController,
     NavParams
 } from 'ionic-angular';
 import {
@@ -29,7 +26,7 @@ export class TaskCreateEditPage {
     task: Task;
     isEdit: Task;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public mocksService: MocksService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public mocksService: MocksService, public toastCtrl: ToastController) {
 
         this.task = navParams.get('task');
         if (!this.task) {
@@ -43,14 +40,5 @@ export class TaskCreateEditPage {
             .then(res => {
                 this.navCtrl.pop();
             });
-    }
-    getData() {
-        DatePicker.show({
-            date: new Date(),
-            mode: 'date'
-        }).then(
-            date => console.log('Got date: ', date),
-            err => console.log('Error occurred while getting date: ', err)
-        );
     }
 }

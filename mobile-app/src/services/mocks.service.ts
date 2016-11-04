@@ -9,6 +9,11 @@ import {
 } from './../models/task.model';
 
 import {
+    Vibration
+} from 'ionic-native';
+
+
+import {
     Storage
 } from '@ionic/storage';
 
@@ -38,6 +43,7 @@ export class MocksService {
     }
 
     save() {
+        Vibration.vibrate([100,100,200]);
         localStorage.setItem('task', JSON.stringify(projects));
     }
 

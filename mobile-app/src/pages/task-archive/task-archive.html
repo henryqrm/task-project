@@ -19,10 +19,7 @@
             <ion-note>Nenhuma tarefa arquivada.</ion-note>
         </ion-item>
         <ion-item *ngFor="let task of tasks" [hidden]="task.status !== 'completed'">
-            <ion-note item-left class="margin-right-15">
-                <h1>{{task.priority}}</h1>
-            </ion-note>
-            <h2>{{task.name}}</h2>
+            <h2>{{task.priority}} - {{task.name}}</h2>
             <p>{{task.description}}</p>
             <ion-badge item-right>{{task.limitAt}}</ion-badge>
             <ion-note item-right>

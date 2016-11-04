@@ -34,13 +34,13 @@
             </ion-item>
 
             <ion-item>
-                <ion-label>Data Limite: {{task.limitAt}}</ion-label>
+                <ion-label>Data Limite:</ion-label>
                 <ion-note item-right>
-                    <button ion-button icon-only clear (click)="getData()">
+                    <button ion-button icon-only clear>
                   		<ion-icon name="calendar"></ion-icon>
                 	</button>
                 </ion-note>
-                <ion-datetime name="limitAt" displayFormat="DD/MM/YYYY" [(ngModel)]="task.limitAt" required></ion-datetime>
+                <ion-datetime name="limitAt" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" min="2016" max="2030-01-01" [(ngModel)]="task.limitAt" required></ion-datetime>
             </ion-item>
 
         </ion-list>

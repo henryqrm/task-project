@@ -26,15 +26,12 @@
         <ion-item *ngFor="let task of tasks" [hidden]="task.status !== 'pending'">
             <ion-note item-left>
                 <button ion-button icon-only clear color="secondary" (click)="taskComplete(task, $index)">
-                  <ion-icon name="square-outline"></ion-icon>
+                  <ion-icon name="checkmark"></ion-icon>
                 </button>
             </ion-note>
-            <ion-note item-left class="margin-right-15">
-                <h1>{{task.priority}}</h1>
-            </ion-note>
-            <h2>{{task.name}}</h2>
+            <h2>{{task.priority}} - {{task.name}}</h2>
             <p>{{task.description}}</p>
-            <ion-badge item-right>{{task.limitAt}}</ion-badge>
+            <ion-badge>{{task.limitAt}}</ion-badge>
             <ion-note item-right>
                 <button ion-button icon-only clear (click)="taskEdit($event,task)">
                   <ion-icon name="create"></ion-icon>

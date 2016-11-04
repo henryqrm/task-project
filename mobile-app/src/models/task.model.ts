@@ -5,6 +5,6 @@ export class Task {
     // image: string;
     status: string; 
     priority: number;
-    limitAt: number;
+    limitAt: string;
     createAt: number;
 }
